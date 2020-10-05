@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/xlzd/gotp"
 
 	"github.com/grafana/grafana-kiosk/pkg/initialize"
 	"github.com/grafana/grafana-kiosk/pkg/kiosk"
@@ -94,6 +95,8 @@ func summary(cfg *kiosk.Config) {
 	log.Println("LoginMethod:", cfg.Target.LoginMethod)
 	log.Println("Username:", cfg.Target.Username)
 	log.Println("Password:", "*redacted*")
+	log.Println("OTP-Secret:", cfg.Target.OTPSecret)
+	log.Println("OTP:", gotp.NewDefaultTOTP(cfg.Target.OTPSecret).Now())
 	log.Println("IgnoreCertificateErrors:", cfg.Target.IgnoreCertificateErrors)
 	log.Println("IsPlayList:", cfg.Target.IsPlayList)
 }

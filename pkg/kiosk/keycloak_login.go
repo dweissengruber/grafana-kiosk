@@ -67,7 +67,6 @@ func GrafanaKioskKeycloak(cfg *Config) {
 		chromedp.WaitVisible(`//a[@href="login/generic_oauth"]`),
 		chromedp.Click(`//a[@href="login/generic_oauth"]`, chromedp.NodeVisible),
 		chromedp.WaitVisible(`#kc-header`, chromedp.ByID),
-		chromedp.WaitVisible(`#kc-header`, chromedp.ByID),
 		chromedp.SendKeys(`//input[@name="username"]`, cfg.Target.Username, chromedp.BySearch),
 		chromedp.SendKeys(`//input[@name="password"]`, cfg.Target.Password+kb.Enter, chromedp.BySearch),
 		chromedp.WaitVisible(`#otp`, chromedp.ByID),
