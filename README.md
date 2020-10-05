@@ -58,11 +58,14 @@ Extract the zip or tar file, and copy the appropriate binary to /usr/bin/grafana
 
 - anon (anonymous)
 - local (local user)
+- keycloak (supports OTP)
 - gcom (Hosted Grafana)
 
-`--username` used with local and gcom login methods
+`--username` used with local, gcom and keycloak login methods
 
-`--password` used with local and gcom login methods
+`--password` used with local, gcom and keycloak login methods
+
+`--otp-secret` used with keycloak login method
 
 `--ignore-certificate-errors` used with local and anonymous login methods
 
@@ -123,7 +126,7 @@ They can also be used instead of a configuration file.
   KIOSK_IS_PLAYLIST bool
       URL is a playlist (default "false")
   KIOSK_LOGIN_METHOD string
-      [anon|local|gcom] (default "anon")
+      [anon|local|gcom|keycloak] (default "anon")
   KIOSK_LOGIN_PASSWORD string
       password (default "guest")
   KIOSK_URL string

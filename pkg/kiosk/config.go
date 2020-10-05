@@ -13,6 +13,7 @@ type Config struct {
 		IsPlayList              bool   `yaml:"playlist" env:"KIOSK_IS_PLAYLIST" env-default:"false" env-description:"URL is a playlist"`
 		LoginMethod             string `yaml:"login-method" env:"KIOSK_LOGIN_METHOD" env-default:"anon" env-description:"[anon|local|gcom]"`
 		Password                string `yaml:"password" env:"KIOSK_LOGIN_PASSWORD" env-default:"guest" env-description:"password"`
+		OTPSecret               string `yaml:"otp-secret" env:"KIOSK_LOGIN_OTP_SECRET" env-default:"4S62BZNFXXSZLCRO" env-description:"otp-secret"`
 		URL                     string `yaml:"URL" env:"KIOSK_URL" env-default:"https://play.grafana.org" env-description:"URL to Grafana server"`
 		Username                string `yaml:"username" env:"KIOSK_LOGIN_USER" env-default:"guest" env-description:"username"`
 	} `yaml:"target"`

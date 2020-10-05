@@ -26,6 +26,7 @@ type Args struct {
 	URL                     string
 	Username                string
 	Password                string
+	OTPSecret               string
 }
 
 // ProcessArgs processes and handles CLI arguments
@@ -34,9 +35,10 @@ func ProcessArgs(cfg interface{}) Args {
 
 	f := flag.NewFlagSet("grafana-kiosk", flag.ContinueOnError)
 	f.StringVar(&a.ConfigPath, "c", "", "Path to configuration file (config.yaml)")
-	f.StringVar(&a.LoginMethod, "login-method", "anon", "[anon|local|gcom]")
+	f.StringVar(&a.LoginMethod, "login-method", "anon", "[anon|local|gcom|keycloak]")
 	f.StringVar(&a.Username, "username", "guest", "username")
 	f.StringVar(&a.Password, "password", "guest", "password")
+	f.StringVar(&a.OTPSecret, "otp-secret", "4S62BZNFXXSZLCRO", "otp-secret")
 	f.StringVar(&a.Mode, "kiosk-mode", "full", "Kiosk Display Mode [full|tv|disabled]\nfull = No TOPNAV and No SIDEBAR\ntv = No SIDEBAR\ndisabled = omit option\n")
 	f.StringVar(&a.URL, "URL", "https://play.grafana.org", "URL to Grafana server")
 	f.BoolVar(&a.IsPlayList, "playlists", false, "URL is a playlist")
@@ -119,6 +121,7 @@ func main() {
 		cfg.Target.LoginMethod = args.LoginMethod
 		cfg.Target.Username = args.Username
 		cfg.Target.Password = args.Password
+		cfg.Target.OTPSecret = args.OTPSecret
 		cfg.Target.IgnoreCertificateErrors = args.IgnoreCertificateErrors
 		cfg.Target.IsPlayList = args.IsPlayList
 		//
@@ -148,6 +151,9 @@ func main() {
 	log.Println("method ", cfg.Target.LoginMethod)
 
 	switch cfg.Target.LoginMethod {
+	case "keycloak":
+		log.Printf("Launching keycloak login kiosk")
+		kiosk.GrafanaKioskKeycloak(&cfg)
 	case "local":
 		log.Printf("Launching local login kiosk")
 		kiosk.GrafanaKioskLocal(&cfg)
