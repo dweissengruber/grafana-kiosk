@@ -2,9 +2,7 @@ package kiosk
 
 import (
 	"context"
-	"io/ioutil"
 	"log"
-	"os"
 	"time"
 
 	"github.com/xlzd/gotp"
@@ -15,16 +13,16 @@ import (
 
 // GrafanaKioskKeycloak creates a chrome-based kiosk using a local grafana-server account
 func GrafanaKioskKeycloak(cfg *Config) {
-	dir, err := ioutil.TempDir("", "chromedp-example")
-	if err != nil {
-		panic(err)
-	}
-	defer os.RemoveAll(dir)
+	//dir, err := ioutil.TempDir("", "chromedp-example")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer os.RemoveAll(dir)
 
 	opts := []chromedp.ExecAllocatorOption{
 		chromedp.NoFirstRun,
 		chromedp.NoDefaultBrowserCheck,
-		// chromedp.DisableGPU, // needed?
+		chromedp.DisableGPU,
 		chromedp.Flag("noerrdialogs", true),
 		chromedp.Flag("kiosk", true),
 		chromedp.Flag("bwsi", true),
@@ -34,7 +32,8 @@ func GrafanaKioskKeycloak(cfg *Config) {
 		chromedp.Flag("disable-overlay-scrollbar", true),
 		chromedp.Flag("ignore-certificate-errors", cfg.Target.IgnoreCertificateErrors),
 		chromedp.Flag("test-type", cfg.Target.IgnoreCertificateErrors),
-		chromedp.UserDataDir(dir),
+		//chromedp.UserDataDir(dir),
+		chromedp.UserDataDir("/home/noc/.config/chromium"),
 	}
 
 	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
